@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Desempeño Digital</title>
+  <meta name="theme-color" content="#1565C0">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icons/icon-192.png">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Desempeño">
+  <style>
+    html, body { margin:0; height:100%; background:#fff; font-family:Arial, sans-serif; }
+    iframe { border:0; width:100%; height:100%; display:block; }
+    #fallback { display:none; padding:24px; text-align:center; }
+    #fallback a { display:inline-block; margin-top:12px; padding:12px 20px; background:#1565C0; color:#fff; border-radius:8px; text-decoration:none; }
+  </style>
+</head>
+<body>
+  <iframe id="app" title="Desempeño Digital" allow="fullscreen"></iframe>
+  <div id="fallback">
+    <p>No se pudo cargar la app dentro de esta ventana.</p>
+    <a id="directo" href="#">Abrir Desempeño Digital</a>
+  </div>
+
+  <script>
+    // PEGAR AQUÍ la URL de la implementación de Apps Script (termina en /exec)
+    const URL_APPS_SCRIPT = "https://script.google.com/macros/s/PEGAR_AQUI_TU_ID/exec";
+
+    const f = document.getElementById("app");
+    f.src = URL_APPS_SCRIPT;
+    document.getElementById("directo").href = URL_APPS_SCRIPT;
+    // Si en 12 segundos no cargó, mostrar botón alternativo
+    const t = setTimeout(() => {
+      f.style.display = "none";
+      document.getElementById("fallback").style.display = "block";
+    }, 12000);
+    f.addEventListener("load", () => clearTimeout(t));
+
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("sw.js");
+    }
+  </script>
+</body>
+</html>
